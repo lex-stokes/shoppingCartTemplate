@@ -28,12 +28,6 @@ export class App extends React.Component {
   };
 
   render() {
-    const cart = (
-      <Cart cart={this.state.cart} keepShopping={this.keepShopping} />
-    );
-    const List = (
-      <Lists item={data.item} addToCart={this.addToCart} />
-    );
     return (
       <>
       <div className="app">

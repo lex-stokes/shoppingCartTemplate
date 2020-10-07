@@ -235,14 +235,6 @@ var App = /*#__PURE__*/function (_React$Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      var cart = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Cart__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        cart: this.state.cart,
-        keepShopping: this.keepShopping
-      });
-      var List = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lists__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        item: _data_example__WEBPACK_IMPORTED_MODULE_5__["default"].item,
-        addToCart: this.addToCart
-      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "app"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_4__["default"], null), this.props.activePage === "listing" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lists__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -282,34 +274,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _CartItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CartItem */ "./client/components/CartItem.jsx");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions */ "./client/actions/index.js");
+var _this = undefined;
+
 
 
 
 
 
 var Cart = function Cart(props) {
+  function myFunc(total, num) {
+    return total + num;
+  }
+
+  var prices = props.cart.map(function (e) {
+    return e.price;
+  }); //breaks on zero items in cart
+
+  var total = prices.reduce(myFunc);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "cart"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Remove"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, props.cart.map(function (item) {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Remove"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, props.cart.map(function (item) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
       key: item.id,
       item: item
     });
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "actions"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Total - $", total), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "#",
     onClick: function onClick() {
-      return props.dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["currentPage"])('listing'));
+      return props.dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["currentPage"])("listing"));
     }
   }, "Continue shopping"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
-      console.log("something");
+      console.log("something    ", props.cart);
+      var cartTemp = props.cart.map(function (e) {
+        return e;
+      });
+      console.log(cartTemp);
       props.dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["updateQuantities"])(props.cart));
+
+      _this.updateQuantities(cartTemp);
     }
-  }, "Update"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "button-primary"
-  }, "Checkout")));
+  }, "Update"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Checkout")));
 };
 
 function mapStateToProps(globalState) {
@@ -342,16 +347,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var CartItem = function CartItem(props) {
-  console.log("line 7 cartitem");
   var name = getNameFromId(props.item.id);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+  var price = getPriceFromId(props.item.id);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     className: "update-input",
-    value: props.item.quantity
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    defaultValue: props.item.quantity,
+    onChange: function onChange(e) {
+      props.handleChange(props.item.id, e.target.value);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
       props.dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["removeFromCart"])(props.item.id));
     }
-  }))));
+  }, "D"))));
 };
 
 function getNameFromId(id) {
@@ -359,6 +367,13 @@ function getNameFromId(id) {
     return item.id === id;
   });
   return item.name;
+}
+
+function getPriceFromId(id) {
+  var item = _data_example__WEBPACK_IMPORTED_MODULE_2__["default"].item.find(function (item) {
+    return item.id === id;
+  });
+  return item.price;
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])()(CartItem));
@@ -409,13 +424,15 @@ var ListItem = function ListItem(props) {
     className: "item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "name"
-  }, item.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }, item.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: ""
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "description"
-  }, item.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "country"
-  }, item.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+  }, "Description: ", item.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "price"
+  }, "Price: $", item.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "abv"
-  }, item.abv, " abv"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, "abv: ", item.abv), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "#",
     className: "cart-link",
     onClick: function onClick() {
@@ -531,13 +548,15 @@ var cart = function cart() {
         return [].concat(_toConsumableArray(state), [{
           id: item.id,
           name: item.name,
-          quantity: 1
+          quantity: 1,
+          price: item.price
         }]);
       } else {
         return [].concat(_toConsumableArray(state), [{
           id: item.id,
           name: item.name,
-          quantity: 1
+          quantity: 1,
+          price: item.price
         }]);
       }
 
@@ -547,13 +566,7 @@ var cart = function cart() {
       });
 
     case "UPDATE_QUANTITIES":
-      console.log(action);
-
-      if (action.id == action.item.id) {
-        action.quantity + 1;
-      } else {
-        return state;
-      }
+      return action.cart;
 
     default:
       return state;
@@ -629,35 +642,35 @@ __webpack_require__.r(__webpack_exports__);
     name: "test1",
     description: "Some words to provide detail1",
     country: "Will probably change this when adding database",
-    style: "perhaps size1",
+    price: 11,
     abv: "t1"
   }, {
     id: 2,
     name: "test2",
     description: "Some words to provide detail2",
     country: "Will probably change this when adding database",
-    style: "perhaps size2",
+    price: 12,
     abv: "t2"
   }, {
     id: 3,
     name: "test3",
     description: "Some words to provide detail3",
     country: "Will probably change this when adding database",
-    style: "perhaps size3",
+    price: 13,
     abv: "t3"
   }, {
     id: 4,
     name: "test4",
     description: "Some words to provide detail4",
     country: "Will probably change this when adding database",
-    style: "perhaps size4",
+    price: 14,
     abv: "t4"
   }, {
     id: 5,
     name: "test5",
     description: "Some words to provide detail5",
     country: "Will probably change this when adding database",
-    style: "perhaps size5",
+    price: 15,
     abv: "t5"
   }]
 });

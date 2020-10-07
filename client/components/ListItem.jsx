@@ -7,10 +7,13 @@ const ListItem = (props) => {
   return (
     <div className="item">
       <p className="name">{item.name}</p>
-      <p className="description">{item.description}</p>
+      <img src=""/>
+      <p className="description">Description: {item.description}</p>
+      <p className="price">Price: ${item.price}</p>
       <p>
-        <span className="country">{item.price}</span>
-        <span className="abv">{item.abv} abv</span>
+       
+        <span className="abv">abv: {item.abv}</span>
+        <br></br>
         <a
           href="#"
           className="cart-link"
