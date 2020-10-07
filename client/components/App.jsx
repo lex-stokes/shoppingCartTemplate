@@ -1,17 +1,52 @@
 import React from "react";
 import { connect } from "react-redux";
 
-export class App extends React.Component {
-  componentDidMount() {}
+import Cart from "./Cart";
+import List from "./List";
+
+import Data from "../../data/example";
+
+class App extends React.Component {
+  state = {
+    activePage: "listing",
+    cart: [],
+  };
+
+  addToCart = (id) => {
+    this.setState({
+      cart: [
+        ...this.state.cart,
+        { id, quantity: 1 }, // TODO: increment if already added
+      ],
+      activePage: "cart",
+    });
+  };
+
+  keepShopping = () => {
+    this.setState({
+      activePage: "listing",
+    });
+  };
 
   render() {
-    console.log(this.props);
-    return <h1>Greetings!</h1>;
+    const cart = (
+      <Cart cart={this.state.cart} keepShopping={this.keepShopping} />
+    );
+    const beerList = (
+      <List item={Data.item} addToCart={this.addToCart} />
+    );
+    return (
+      <div className="app">
+        {this.props.activePage === "listing" ? List : cart}
+      </div>
+    );
   }
 }
 
-const mapStateToProps = ({}) => {
-  return {};
-};
+function mapStateToProps(globalState) {
+  return {
+    activePage: globalState.activePage,
+  };
+}
 
 export default connect(mapStateToProps)(App);
