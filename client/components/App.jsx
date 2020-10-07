@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import Cart from "./Cart";
-import List from "./List";
+import Lists from "./Lists";
+import Header from "./Header";
+import data from "../../data/example";
 
-import Data from "../../data/example";
-
-class App extends React.Component {
+export class App extends React.Component {
   state = {
     activePage: "listing",
     cart: [],
@@ -32,13 +31,16 @@ class App extends React.Component {
     const cart = (
       <Cart cart={this.state.cart} keepShopping={this.keepShopping} />
     );
-    const beerList = (
-      <List item={Data.item} addToCart={this.addToCart} />
+    const List = (
+      <Lists item={data.item} addToCart={this.addToCart} />
     );
     return (
+      <>
       <div className="app">
-        {this.props.activePage === "listing" ? List : cart}
+        <Header />
+        {this.props.activePage === "listing" ? <Lists item={data.item} addToCart={this.addToCart} /> : <Cart cart={this.state.cart} keepShopping={this.keepShopping} />} 
       </div>
+      </>
     );
   }
 }

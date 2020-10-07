@@ -4,3 +4,4 @@ TODOS
 -- create all the connections
 -- add some styling
 -- add auth
+-- make delete work
