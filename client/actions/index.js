@@ -1,33 +1,32 @@
-export const actionCreatorName = () => {
-    return {
-      type: 'ACTION_TYPE'
-    }
-  }
-  
+export const ADD_TO_CART = 'ADD_TO_CART'
+export const NAVIGATE = 'NAVIGATE'
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+export const UPDATE_CART = 'UPDATE_CART'
+
   export const currentPage = target => {
     return {
-      type: 'NAVIGATE',
+      type: NAVIGATE,
       target
     }
   }
   
-  export const addToCart = (item) => {
+  export const addToCart = item => {
     return {
-      type: 'ADD_TO_CART',
+      type: ADD_TO_CART,
       item
     }
   }
   
   export const removeFromCart = id => {
     return {
-      type: 'REMOVE_FROM_CART',
+      type: REMOVE_FROM_CART,
       id
     }
   }
   
-  export const updateQuantities = cart => {
+  export const updateCart = cart => {
     return {
-      type: 'UPDATE_CARTS',
+      type: UPDATE_CART,
       cart
     }
   }
